@@ -1,6 +1,6 @@
 import { App } from "uWebSockets.js";
 
-const port = 9001;
+const port = 9001; //ws.alienpls.com
 const users = new Set();
 
 const app = App();
