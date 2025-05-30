@@ -19,12 +19,10 @@ function broadcastUserCount() {
         // 0 = message dropped (connection likely closed or closing)
         console.log("Message dropped for a client during broadcast (send status 0). Client might be disconnecting.");
       } else {
-        // This case should ideally not happen based on uWS docs
         console.log(`Unknown return status from ws.send(): ${status}`);
       }
     } catch (error) {
       console.log("Error sending message during broadcast:", error);
-      // It's possible a client object became invalid. The 'close' handler should deal with it.
     }
   });
   if (users.size > 0) {
