@@ -1,0 +1,23 @@
+{
+  "dependencies": {
+    "uWebSockets.js": "github:uNetworking/uWebSockets.js#v20.52.0"
+  },
+  "name": "nothing-server",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/badoge/nothing-server.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/badoge/nothing-server/issues"
+  },
+  "homepage": "https://github.com/badoge/nothing-server#readme",
+  "description": ""
+}
