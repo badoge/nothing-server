@@ -30,35 +30,39 @@ function broadcastUserCount() {
   }
 }
 
-app.ws("/connect", {
-  //options
-  idleTimeout: 30,
-  maxPayloadLength: 1 * 1024,
-  maxBackpressure: 5 * 1024,
+app
+  .ws("/connect", {
+    //options
+    idleTimeout: 30,
+    maxPayloadLength: 1 * 1024,
+    maxBackpressure: 5 * 1024,
 
-  /* Handlers */
-  open: (ws) => {
-    users.add(ws);
-    console.log(`user connected - total: ${users.size}`);
-    broadcastUserCount();
-  },
-  message: (ws, message, isBinary) => {
-    ws.close();
-  },
-  drain: (ws) => {
-    // This is called when backpressure eases and you can send more data.
-    ws.send(users.size.toString());
-  },
-  close: (ws, code, message) => {
-    const wasConnected = users.delete(ws);
-    if (wasConnected) {
-      console.log(`user disconnected. Code: ${code}, total: ${users.size}`);
+    /* Handlers */
+    open: (ws) => {
+      users.add(ws);
+      console.log(`user connected - total: ${users.size}`);
       broadcastUserCount();
-    } else {
-      console.log(`untracked user disconnected`);
-    }
-  },
-});
+    },
+    message: (ws, message, isBinary) => {
+      ws.close();
+    },
+    drain: (ws) => {
+      // This is called when backpressure eases and you can send more data.
+      ws.send(users.size.toString());
+    },
+    close: (ws, code, message) => {
+      const wasConnected = users.delete(ws);
+      if (wasConnected) {
+        console.log(`user disconnected. Code: ${code}, total: ${users.size}`);
+        broadcastUserCount();
+      } else {
+        console.log(`untracked user disconnected`);
+      }
+    },
+  })
+  .any("/*", (res, req) => {
+    res.end("nothing here");
+  });
 
 app.listen(port, (listenSocket) => {
   if (listenSocket) {
